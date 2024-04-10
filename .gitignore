@@ -2,7 +2,6 @@
 *.pyc
 
 # Ignore text files
-*.txt
 
 # Ignore ONNX files
 *.onnx

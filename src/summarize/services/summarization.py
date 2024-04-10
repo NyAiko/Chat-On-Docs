@@ -5,12 +5,16 @@ from scipy.spatial.distance import cdist
 from sklearn.cluster import KMeans
 import time
 from src.summarize.services.llm_sum import summarize
+from src.chat.services.chat_models import chat_models
+
+llm = chat_models['google']
+
 async def calculate_distances(cluster_embeddings, centroids,i):
     distances = cdist(cluster_embeddings, [centroids[i]], 'cosine')
     closest_doc_indices = np.argsort(distances.flatten())[:2]
     return closest_doc_indices, distances.flatten()
 
-async def fast_summarization(collection_id:str, target_metadata,llm=summarize,language= 'english'):
+async def fast_summarization(collection_id:str, target_metadata,llm=summarize):
     start_time = time.time()
     docs, embeddings = await get_all_docs_embeddings(collection_name=collection_id, filenames=target_metadata)
     num_docs = int(len(docs))
@@ -41,6 +45,6 @@ async def fast_summarization(collection_id:str, target_metadata,llm=summarize,la
     
     endtime = time.time()
     print('Execution time: ',endtime-start_time)
-    input = {'text': summary_str, 'language':language}
+    input = {'text': summary_str}
     output = llm.invoke(input)
     return output

@@ -15,3 +15,7 @@ nltk
 langchain-google-genai
 streamlit-chat
 python-dotenv
+transformers
+onnxruntime
+pypdf
+PyPDF

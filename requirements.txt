@@ -13,3 +13,5 @@ langsmith
 boto3
 nltk
 langchain-google-genai
+streamlit-chat
+python-dotenv

@@ -1,6 +1,6 @@
 import fastembed
 from fastembed import TextEmbedding
-embed = TextEmbedding(model_name='intfloat/multilingual-e5-large')
+embed = TextEmbedding(model_name='BAAI/bge-small-en-v1.5')
 
 def get_text_embeddings(text:str):
   embeddings = list(embed.embed('Hi'))[0].astype('float16').tolist() #Vector embeddings output

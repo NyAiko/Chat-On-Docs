@@ -5,9 +5,7 @@ from scipy.spatial.distance import cdist
 from sklearn.cluster import KMeans
 import time
 from src.summarize.services.llm_sum import summarize
-from src.chat.services.chat_models import chat_models
 
-llm = chat_models['google']
 
 async def calculate_distances(cluster_embeddings, centroids,i):
     distances = cdist(cluster_embeddings, [centroids[i]], 'cosine')

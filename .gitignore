@@ -1,0 +1,27 @@
+# Ignore compiled Python files
+*.pyc
+
+# Ignore text files
+*.txt
+
+# Ignore ONNX files
+*.onnx
+
+# Ignore Jupyter Notebook files
+*.ipynb
+.ipynb_checkpoints
+
+# Ignore environment files
+*.env
+
+# Ignore CSV files
+*.csv
+
+# Ignore temporary directory
+temp/
+
+# Ignore Python cache
+__pycache__
+
+# Ignore main Python script
+main.py

@@ -1,11 +1,23 @@
-import onnxruntime
-import json
-from transformers import BertTokenizer, BertConfig
-import numpy as np
 import os
+import json
+import numpy as np
+import onnxruntime
+from transformers import BertTokenizer, BertConfig
+import s3fs
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Get AWS credentials from environment variables
+aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID")
+aws_secret_access_key = os.getenv("AWS_SECRET_ACCESS_KEY")
+
+# Create an S3FileSystem object with credentials
+s3 = s3fs.S3FileSystem(key=aws_access_key_id, secret=aws_secret_access_key)
 
 # Define paths relative to the current script file
-model_path = os.path.join(os.path.dirname(__file__), "model_optimized.onnx")
+model_path = 's3://weightsforemb/model_optimized.onnx'
 config_path = os.path.join(os.path.dirname(__file__), "config.json")
 ort_config_path = os.path.join(os.path.dirname(__file__), "ort_config.json")
 special_tokens_path = os.path.join(os.path.dirname(__file__), "special_tokens_map.json")
@@ -14,7 +26,8 @@ tokenizer_config_path = os.path.join(os.path.dirname(__file__), "tokenizer_confi
 vocab_path = os.path.join(os.path.dirname(__file__), "vocab.txt")
 
 # Load ONNX model
-ort_session = onnxruntime.InferenceSession(model_path)
+with s3.open(model_path, 'rb') as f:
+    ort_session = onnxruntime.InferenceSession(f.read())
 
 # Load config
 with open(config_path, "r") as f:
@@ -45,5 +58,3 @@ async def get_text_embeddings(text):
     token_embeddings = outputs[0]
     token_embeddings = np.mean(token_embeddings, axis=1)
     return token_embeddings.reshape((-1,)).astype(np.float16)
-
-

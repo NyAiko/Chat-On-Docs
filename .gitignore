@@ -17,7 +17,6 @@
 *.csv
 
 # Ignore temporary directory
-temp/
 
 # Ignore Python cache
 __pycache__

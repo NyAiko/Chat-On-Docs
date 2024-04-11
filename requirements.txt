@@ -18,4 +18,3 @@ python-dotenv
 transformers
 onnxruntime
 pypdf
-s3fs

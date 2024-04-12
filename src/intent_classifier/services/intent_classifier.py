@@ -1,12 +1,14 @@
-from src.vectordb.services import embeddings_function
-from joblib import load
+from fastembed.embedding import TextEmbedding
+from typing import List
 import numpy as np
+from joblib import load
 
-emb_fn = embeddings_function.FastEmbeddingFunction()
+emb = TextEmbedding(model_name = 'BAAI/bge-small-en-v1.5')
 
+def compute_embeddings(text:List[str]):
+  embeddings = np.array(list(emb.embed(text)))
+  return embeddings
 
-async def classify_intent(text:str):
-    vec = await emb_fn(text)
-    sgd = load('sgd.p')
-    return sgd.predict([np.array(vec)])[0]
-
+def classify_intent(text:str):
+  model = load('intent_clf.p')
+  return model.predict([text])[0]

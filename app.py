@@ -81,4 +81,3 @@ async def main():
                 message(msg, is_user=True, key=str(i) + '_user')
 if __name__ == '__main__':
     asyncio.run(main())
-    

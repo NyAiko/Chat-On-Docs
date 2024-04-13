@@ -9,17 +9,26 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Define paths relative to the current script file
-model_path = os.path.join(os.path.dirname(__file__),'model_optimized.onnx')
+if os.getenv('machine')=='local':
+    model_path = os.path.join(os.path.dirname(__file__),'model_optimized.onnx')
+    # Load ONNX model
+    with open(model_path, 'rb') as f:
+        ort_session = onnxruntime.InferenceSession(f.read())
+
+else:
+    import s3fs
+    region = 'us-east-1'
+    s3 = s3fs.S3FileSystem()
+    s3_file_path = 's3://weightsforemb/model_optimized.onnx'
+    with s3.open(s3_file_path, 'rb') as f:
+        ort_session = onnxruntime.InferenceSession(f.read())
+    
 config_path = os.path.join(os.path.dirname(__file__), "config.json")
 ort_config_path = os.path.join(os.path.dirname(__file__), "ort_config.json")
 special_tokens_path = os.path.join(os.path.dirname(__file__), "special_tokens_map.json")
 tokenizer_path = os.path.join(os.path.dirname(__file__), "tokenizer.json")
 tokenizer_config_path = os.path.join(os.path.dirname(__file__), "tokenizer_config.json")
 vocab_path = os.path.join(os.path.dirname(__file__), "vocab.txt")
-
-# Load ONNX model
-with open(model_path, 'rb') as f:
-    ort_session = onnxruntime.InferenceSession(f.read())
 
 # Load config
 with open(config_path, "r") as f:

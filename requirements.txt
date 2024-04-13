@@ -4,7 +4,7 @@ scikit-learn
 qdrant-client
 fastembed
 openai
-langchain
+langchain[all]
 langchain-community
 langchain-core
 langchain-openai
@@ -18,3 +18,4 @@ python-dotenv
 transformers
 onnxruntime
 pypdf
+semantic-text-splitter

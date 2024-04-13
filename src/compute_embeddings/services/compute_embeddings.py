@@ -14,7 +14,6 @@ if os.getenv('machine')=='local':
     # Load ONNX model
     with open(model_path, 'rb') as f:
         ort_session = onnxruntime.InferenceSession(f.read())
-
 else:
     import s3fs
     region = 'us-east-1'

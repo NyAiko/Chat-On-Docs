@@ -22,7 +22,7 @@ else:
     s3_file_path = 's3://weightsforemb/model_optimized.onnx'
     with s3.open(s3_file_path, 'rb') as f:
         ort_session = onnxruntime.InferenceSession(f.read())
-    
+
 config_path = os.path.join(os.path.dirname(__file__), "config.json")
 ort_config_path = os.path.join(os.path.dirname(__file__), "ort_config.json")
 special_tokens_path = os.path.join(os.path.dirname(__file__), "special_tokens_map.json")
@@ -46,7 +46,6 @@ with open(special_tokens_path, "r") as f:
 tokenizer = BertTokenizer(tokenizer_file=tokenizer_path, vocab_file=vocab_path)
 tokenizer_config = BertConfig.from_pretrained(tokenizer_config_path)
 tokenizer_config.vocab_file = vocab_path
-
 
 async def get_text_embeddings(text):
     # Tokenize the input text

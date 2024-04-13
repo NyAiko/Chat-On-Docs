@@ -6,13 +6,9 @@ from nltk.stem import WordNetLemmatizer
 import re
 import numpy as np
 import os
+from src.compute_embeddings.services.compute_embeddings import get_text_embeddings as emb_func
 
 load_dotenv()
-
-if os.getenv('machine')=='local':
-    from src.compute_embeddings.services.compute_embeddings import get_text_embeddings as emb_func
-else:
-    from src.compute_embeddings.services.qdrant_fastembeddings import get_text_embeddings as emb_func
 
 async def clean_text(text):
     all_stopwords = set(stopwords.words())

@@ -54,5 +54,5 @@ async def get_text_embeddings(text):
     # Run inference
     outputs = ort_session.run(None, ort_inputs)
     cls_embedding = outputs[0][:, 0, :]  # Extract embeddings for the [CLS] token
-    return cls_embedding.astype(np.float16)
+    return cls_embedding.astype(np.float16).reshape((-1,))
 

@@ -9,11 +9,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Define paths relative to the current script file
-if os.getenv('machine')=='local':
-    model_path = os.path.join(os.path.dirname(__file__),'model_optimized.onnx')
+
+model_path = os.path.join(os.path.dirname(__file__),'model_optimized.onnx')
     # Load ONNX model
-    with open(model_path, 'rb') as f:
-        ort_session = onnxruntime.InferenceSession(f.read())
+with open(model_path, 'r') as f:
+    ort_session = onnxruntime.InferenceSession(f.read())
 #else:
 #    import s3fs
 #    region = 'us-east-1'

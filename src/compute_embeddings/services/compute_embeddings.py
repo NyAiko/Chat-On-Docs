@@ -14,13 +14,13 @@ if os.getenv('machine')=='local':
     # Load ONNX model
     with open(model_path, 'rb') as f:
         ort_session = onnxruntime.InferenceSession(f.read())
-else:
-    import s3fs
-    region = 'us-east-1'
-    s3 = s3fs.S3FileSystem()
-    s3_file_path = 's3://weightsforemb/model_optimized.onnx'
-    with s3.open(s3_file_path, 'rb') as f:
-        ort_session = onnxruntime.InferenceSession(f.read())
+#else:
+#    import s3fs
+#    region = 'us-east-1'
+#    s3 = s3fs.S3FileSystem()
+#    s3_file_path = 's3://weightsforemb/model_optimized.onnx'
+#    with s3.open(s3_file_path, 'rb') as f:
+#        ort_session = onnxruntime.InferenceSession(f.read())
 
 config_path = os.path.join(os.path.dirname(__file__), "config.json")
 ort_config_path = os.path.join(os.path.dirname(__file__), "ort_config.json")

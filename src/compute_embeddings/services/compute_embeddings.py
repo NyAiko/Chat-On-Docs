@@ -12,7 +12,7 @@ load_dotenv()
 
 model_path = os.path.join(os.path.dirname(__file__),'model_optimized.onnx')
     # Load ONNX model
-with open(model_path, 'r') as f:
+with open(model_path, 'rb') as f:
     ort_session = onnxruntime.InferenceSession(f.read())
 #else:
 #    import s3fs
